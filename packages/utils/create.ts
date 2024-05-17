@@ -27,7 +27,7 @@ function createBEM(prefixName:string){
     const bm = (blockSuffix:string = "",modifier:string = "") => blockSuffix && modifier ? _bem(prefixName,blockSuffix,"",modifier) : ""
     const em = (element:string = "",modifier:string = "") => element && modifier ? _bem(prefixName,"",element,modifier) : ""
     const bem = (blockSuffix:string = "",element:string = "",modifier:string = "") => blockSuffix && element && modifier ? _bem(prefixName,blockSuffix,element,modifier) : ""
-    const is = (name:string,state)=>{state ? `is-${name}` : ""}
+    const is = (name:string,state:string|boolean) => (state ? `is-${name}` : "")
     return{
         b,
         e,
@@ -40,7 +40,7 @@ function createBEM(prefixName:string){
     }
 }
 
-function createNamespace(name:string){
+export function createNamespace(name:string){
     //加上前缀名
     const prefixName = `p-${name}`
     return createBEM(prefixName)
@@ -51,3 +51,7 @@ function createNamespace(name:string){
 // console.log(bem.e('element'))
 // console.log(bem.m('modifier'))
 // console.log(bem.bem('box','element','modifier'))
+// console.log(bem.be('box','element'))
+// console.log(bem.bm('box','modifier'))
+// console.log(bem.em('element','modifier'))
+// console.log(bem.is('checked',true))

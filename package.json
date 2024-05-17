@@ -3,16 +3,26 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@pim-hu/components": "workspace:*",
+    "@pim-hu/theme-chalk": "workspace:*",
+    "@pim-hu/utils": "workspace:*",
     "typescript": "^5.4.5",
-    "vue": "^3.4.27",
-    "@pim-hu/components":"workspace:*",
-    "@pim-hu/utils":"workspace:*",
-    "@pim-hu/theme-chalk":"workspace:*"
+    "vue": "^3.4.27"
   },
   "scripts": {
-    "dev": "pnpm -C play dev"
+    "dev": "pnpm -C play dev",
+    "lint": "eslint."
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.26.0",
+    "sass": "^1.77.1",
+    "unplugin-vue-define-options": "^1.4.4"
+  }
 }
