@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "pnpm -C play dev",
-    "lint": "eslint."
+    "doc:dev": "pnpm -C docs dev"
   },
   "keywords": [],
   "author": "",
