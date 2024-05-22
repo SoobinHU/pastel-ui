@@ -25,9 +25,18 @@ function createLabel(level: number): string {
 const data = ref(createData())
 console.log(data)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-const handleClick = (e: any)=>{
-  console.log('点击',e)
+const handleClick = (e: any) => {
+  console.log('点击', e)
 }
+
+const handleBlur = (e:FocusEvent) =>{
+  console.log((e.target as HTMLInputElement).value,'blur')
+}
+const handleFocus = (e:FocusEvent) =>{
+  console.log((e.target as HTMLInputElement).value,'focus')
+}
+
+const username = ref('hello')
 </script>
 
 <template>
@@ -55,6 +64,22 @@ const handleClick = (e: any)=>{
       </p-icon>
     </template>
   </p-button>
+  {{ username }}
+  <p-input v-model="username" @blur="handleBlur" @focus="handleFocus" placeholder="请输入密码" :show-password="true" :clearable="true">
+    <template #prepend>你好</template>
+    <template #prefixIcon>
+      <p-icon>
+        <AddCircle></AddCircle>
+      </p-icon>
+    </template>
+
+    <!-- <template #sufixIcon>
+      <p-icon>
+        <AddCircle></AddCircle>
+      </p-icon>
+    </template> -->
+    <template #append>见面</template>
+  </p-input>
 </template>
 
 <style scoped></style>
