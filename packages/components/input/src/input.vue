@@ -43,9 +43,13 @@
 <script lang="ts" setup>
 import { Eye, Close } from '@vicons/ionicons5'
 import { createNamespace } from '@pim-hu/utils/create'
-import { useAttrs, useSlots, watch, ref, onMounted, computed } from 'vue'
+import { useAttrs, useSlots, watch, ref, onMounted, computed, inject } from 'vue'
 import { inputEmits, inputProps } from './input'
 import { nextTick } from 'vue'
+import { FormItemContextKey } from '../../form/src/form-item'
+
+//拿到表单上下文
+const formItemContext = inject(FormItemContextKey)
 
 defineOptions({
   name: 'p-input',
@@ -66,6 +70,7 @@ watch(
   () => props.modelValue,
   () => {
     setNativeInput()
+    formItemContext?.validate('change').catch(()=>{})
   }
 )
 const input = ref<HTMLInputElement | null>(null)
@@ -124,6 +129,7 @@ const handleChange = (e: Event) => {
   emit('change', (e.target as HTMLInputElement).value)
 }
 const handleBlur = (e: FocusEvent) => {
+  formItemContext?.validate('blur').catch(()=>{})
   emit('blur', e)
 }
 const handleFocus = (e: FocusEvent) => {

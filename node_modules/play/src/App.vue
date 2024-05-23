@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { reactive, ref } from 'vue'
 import { AddCircle } from '@vicons/ionicons5'
-import { ref } from 'vue'
-
+import { FormInstance } from '@pim-hu/components/form';
+// -----------------------tree------------------------------
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createData(level = 4, parentKey = ''): any {
   if (!level) return []
@@ -24,19 +25,33 @@ function createLabel(level: number): string {
 }
 const data = ref(createData())
 console.log(data)
+// -------------------input---------------------------
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 const handleClick = (e: any) => {
   console.log('点击', e)
 }
 
-const handleBlur = (e:FocusEvent) =>{
-  console.log((e.target as HTMLInputElement).value,'blur')
+const handleBlur = (e: FocusEvent) => {
+  console.log((e.target as HTMLInputElement).value, 'blur')
 }
-const handleFocus = (e:FocusEvent) =>{
-  console.log((e.target as HTMLInputElement).value,'focus')
+const handleFocus = (e: FocusEvent) => {
+  console.log((e.target as HTMLInputElement).value, 'focus')
 }
 
 const username = ref('hello')
+
+// ------------------form--------------------------------
+const state = reactive({ username: '', password: '' })
+
+const formRef = ref<FormInstance>()
+
+const validateForm = () => {
+  const form = formRef.value
+  form?.validate((valid,errors)=>{
+    console.log(valid,errors)
+  })
+}
 </script>
 
 <template>
@@ -47,6 +62,7 @@ const username = ref('hello')
     <AddCircle></AddCircle>
   </p-icon>
 
+  <!-- ------------------button-------------------- -->
   <!-- <p-tree :data="data" label-field="label" key-field="key" children-field="children"></p-tree> -->
   <p-button
     size="medium"
@@ -64,8 +80,16 @@ const username = ref('hello')
       </p-icon>
     </template>
   </p-button>
+  <!-- ------------------input-------------------- -->
   {{ username }}
-  <p-input v-model="username" @blur="handleBlur" @focus="handleFocus" placeholder="请输入密码" :show-password="true" :clearable="true">
+  <p-input
+    v-model="username"
+    @blur="handleBlur"
+    @focus="handleFocus"
+    placeholder="请输入密码"
+    :show-password="true"
+    :clearable="true"
+  >
     <template #prepend>你好</template>
     <template #prefixIcon>
       <p-icon>
@@ -80,6 +104,37 @@ const username = ref('hello')
     </template> -->
     <template #append>见面</template>
   </p-input>
+  <!-- ------------------form-------------------- -->
+  <p-form
+  ref="formRef"
+    :model="state"
+    :rules="{
+      username: {
+        min: 6,
+        max: 10,
+        message: '用户名必须6-10位',
+        trigger: ['change', 'blur']
+      }
+    }"
+  >
+    <p-form-item
+      prop="username"
+      :rules="[{ required: true, message: '请输入用户名', trigger: 'blur' }]"
+    >
+      <p-input placeholder="请输入用户名" v-model="state.username"></p-input>
+      <template #label>用户名</template>
+      <template #error></template>
+    </p-form-item>
+    <p-form-item
+      prop="password"
+      :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]"
+    >
+      <p-input placeholder="请输入密码" v-model="state.password" type="password" ></p-input>
+      <template #label>密码</template>
+      <template #error></template>
+    </p-form-item>
+    <p-button @click="validateForm">提交</p-button>
+  </p-form>
 </template>
 
 <style scoped></style>

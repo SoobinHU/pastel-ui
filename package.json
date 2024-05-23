@@ -6,6 +6,7 @@
     "@pim-hu/components": "workspace:*",
     "@pim-hu/theme-chalk": "workspace:*",
     "@pim-hu/utils": "workspace:*",
+    "async-validator": "^4.2.5",
     "typescript": "^5.4.5",
     "vue": "^3.4.27"
   },
